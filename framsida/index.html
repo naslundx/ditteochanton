@@ -14,7 +14,7 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                background: linear-gradient(135deg, #fff0f5, #ffe4e1);
+                background: #959e82;
                 font-family: "Playfair Display", serif;
                 overflow: hidden;
             }
@@ -35,7 +35,7 @@
             .text {
                 font-family: "Great Vibes", cursive;
                 font-size: 12rem; /* bigger main text */
-                color: #b22222;
+                color: #fff;
                 opacity: 0;
                 position: relative;
             }
@@ -43,7 +43,7 @@
             .date {
                 font-family: "Great Vibes", cursive;
                 font-size: 7.5rem; /* larger date */
-                color: #8b0000;
+                color: #fff;
                 margin-top: 2.5rem;
             }
 
@@ -192,7 +192,7 @@
                     //"💍",
                     //"🎉",
                 ];
-                const colors = ["#f4a6b6", "#cfa9f1", "#ffd7a6", "#fff8a6"]; // pastel pink, lavender, peach, gold
+                const colors = ["#4d5c45"]; //, "#cfa9f1", "#ffd7a6", "#fff8a6"]; // pastel pink, lavender, peach, gold
 
                 setInterval(() => {
                     const note = document.createElement("div");
@@ -214,7 +214,7 @@
                     document.body.appendChild(note);
 
                     setTimeout(() => note.remove(), 12000);
-                }, 900);
+                }, 1200);
             }
 
             window.onload = animateSequence;
