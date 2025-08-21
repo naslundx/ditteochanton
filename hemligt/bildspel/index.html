@@ -16,10 +16,39 @@
                 box-sizing: border-box;
             }
 
+            #container {
+                flex-wrap: wrap;
+                display: flex;
+                gap: 10px;
+                margin: 30px auto;
+                max-width: 1000px;
+            }
+
+            @media (max-width: 600px) {
+                #container {
+                    flex-direction: column;
+                    margin: 10px;
+                }
+
+                .slideshow {
+                    width: 100%;
+                    min-height: 50vh;
+                    max-width: 100% !important;
+                }
+            }
+
+            .information {
+                margin: 20px;
+                flex: 1;
+                border: 1px solid green;
+                border-radius: 20px;
+                padding: 20px;
+                font-family: Verdana;
+            }
+
             body {
                 margin: 0;
                 background: #e6fff2;
-                color: #fff;
                 font-family:
                     system-ui,
                     -apple-system,
@@ -32,13 +61,13 @@
 
             .slideshow {
                 border-radius: 50px;
-                margin: 0 auto;
-                margin-top: 5vh;
                 position: relative;
-                width: 60%;
-                height: 90vh; /* 50% of viewport height */
                 overflow: hidden;
                 isolation: isolate; /* keep z-index layering clean */
+                flex: 3;
+                min-width: 40%;
+                max-width: 50%;
+                max-height: 75vh;
             }
 
             .slideshow img {
@@ -90,25 +119,57 @@
         </style>
     </head>
     <body>
-        <div class="slideshow" id="slideshow">
-            <!-- Replace with your images -->
-            <img
-                src="https://www.brides.com/thmb/tOB8NuWNp_RklYDuWsKcODQEYCc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Natalie_and_David-Fort_Worth_Wedding_2020_Mashaida_Photography-5Q8A8732.jpg-9c77005b2cd6423bb82304c3812413e5.jpg"
-                alt="Slide 1"
-                class="active"
-            />
-            <img
-                src="https://www.brides.com/thmb/VcqJxs9Vr6B9Vp4DGqATiQocLGA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/11-minimalist-french-inspired-texas-wedding-couple-portrait-the-lockharts-0424-9fa3bfbef45946248140c6fd5a834ee1.jpg"
-                alt="Slide 2"
-            />
-            <img
-                src="https://www.brides.com/thmb/KWd1O95kGeJYwPc9wsEVIZnKTbM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Wedding-Pose-FOR-THE-LOVE-OF-IT-81f2ea6b25ce4902b553c425779388c5.jpg"
-                alt="Slide 3"
-            />
-            <img
-                src="https://www.brides.com/thmb/xtuXEB_u2M_k02JnEVAPUn2PTOQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Wedding-Poses-Wedding-Lena-Mirisola-2c54b74ec0c04c7a817ac7245af3d15d.JPG"
-                alt="Slide 4"
-            />
+        <div id="container">
+            <div class="information">
+                <h1>Välkomna till vårt äventyr! ✨</h1>
+                <p>
+                    Vi vill fira kärleken tillsammans med er alla – familj,
+                    vänner och långväga gäster. Ingen resa är för lång, inget
+                    skratt för högt och ingen dans för vild. Kom som du är, men
+                    kom hungrig på både mat och minnen!
+                </p>
+            </div>
+
+            <div class="slideshow" id="slideshow">
+                <!-- Replace with your images -->
+                <img
+                    src="https://www.brides.com/thmb/tOB8NuWNp_RklYDuWsKcODQEYCc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Natalie_and_David-Fort_Worth_Wedding_2020_Mashaida_Photography-5Q8A8732.jpg-9c77005b2cd6423bb82304c3812413e5.jpg"
+                    alt="Slide 1"
+                    class="active"
+                />
+                <img
+                    src="https://www.brides.com/thmb/VcqJxs9Vr6B9Vp4DGqATiQocLGA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/11-minimalist-french-inspired-texas-wedding-couple-portrait-the-lockharts-0424-9fa3bfbef45946248140c6fd5a834ee1.jpg"
+                    alt="Slide 2"
+                />
+                <img
+                    src="https://www.brides.com/thmb/KWd1O95kGeJYwPc9wsEVIZnKTbM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Wedding-Pose-FOR-THE-LOVE-OF-IT-81f2ea6b25ce4902b553c425779388c5.jpg"
+                    alt="Slide 3"
+                />
+                <img
+                    src="https://www.brides.com/thmb/xtuXEB_u2M_k02JnEVAPUn2PTOQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Wedding-Poses-Wedding-Lena-Mirisola-2c54b74ec0c04c7a817ac7245af3d15d.JPG"
+                    alt="Slide 4"
+                />
+            </div>
+
+            <div class="information">
+                <ul>
+                    <li>Datum: 7 september 2025</li>
+                    <li>
+                        Vigsel: På en klippa vid havet i Bohuslän, kl. 15.00
+                    </li>
+                    <li>
+                        Middag & fest: Ett gammalt båthus förvandlat till
+                        dansgolv, från kl. 18.00 tills solen går upp
+                    </li>
+                    <li>
+                        Klädkod: Färgglatt och festligt (glitter uppmuntras!)
+                    </li>
+                    <li>
+                        Transport: Vi fixar båttransfer från kajen – glöm inte
+                        flytväst
+                    </li>
+                </ul>
+            </div>
         </div>
 
         <script>
