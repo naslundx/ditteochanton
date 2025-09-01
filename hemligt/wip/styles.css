@@ -31,9 +31,33 @@ main {
     overflow: hidden;
 }
 
+.main-img {
+    width: 50%;
+    max-height: 75vh;
+    /* Apply gradient mask */
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent,
+        black 15%,
+        black 85%,
+        transparent
+    );
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: 100% 100%;
+
+    mask-image: linear-gradient(
+        to right,
+        transparent,
+        black 15%,
+        black 85%,
+        transparent
+    );
+    mask-repeat: no-repeat;
+    mask-size: 100% 100%;
+}
+
 #info {
     background: #959e82;
-    padding-bottom: 30px;
 }
 
 section {
@@ -69,6 +93,7 @@ section h1 {
     gap: 10px;
     overflow-y: scroll;
     height: 100vh;
+    padding-bottom: 100px;
 }
 
 .flex-container > div {
@@ -202,7 +227,7 @@ body {
 
 .text {
     font-family: "La Belle Aurore", cursive;
-    font-size: 10rem;
+    font-size: 6rem;
     color: #fff;
     opacity: 0;
     position: relative;
@@ -210,7 +235,7 @@ body {
 
 .date {
     font-family: "La Belle Aurore", cursive;
-    font-size: 5.5rem;
+    font-size: 4.5rem;
     color: #fff;
     margin-top: -4rem;
 }
@@ -370,13 +395,21 @@ body {
 }
 
 .fade-in-on-scroll.visible {
-    opacity: 1;
     transform: translateY(0);
 }
 
+.will-fade-in {
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+}
+
+.visible {
+    opacity: 1;
+}
+
 /* Scroll down button */
-.scroll-down-btn {
-    position: absolute; /* floats relative to parent */
+button.scroll-down-btn {
+    position: absolute;
     bottom: 2rem;
     left: 50%;
     transform: translateX(-50%);
@@ -388,8 +421,16 @@ body {
     animation: bounce 2s infinite;
 }
 
+button.scroll-down-btn i {
+    font-size: 4rem;
+}
+
 .scroll-down-btn:focus {
     outline: none;
+}
+
+.scroll-down-btn:hover {
+    color: white;
 }
 
 @keyframes bounce {

@@ -202,3 +202,8 @@ const observer = new IntersectionObserver((entries) => {
 document
   .querySelectorAll(".fade-in-on-scroll")
   .forEach((el) => observer.observe(el));
+
+setTimeout(
+  () => document.querySelector(".fade-in").classList.add("visible"),
+  8000,
+);
