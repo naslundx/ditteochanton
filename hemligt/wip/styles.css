@@ -30,6 +30,7 @@ section {
     scroll-snap-stop: always;
     min-height: 100vh;
     padding: 10px;
+    height: 100vh;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -67,6 +68,10 @@ section#info > div img {
     margin-bottom: -10px;
     border-radius: 10px;
     background:;
+}
+
+#info > div:last-of-type {
+    margin-bottom: 30px;
 }
 
 div.border {
