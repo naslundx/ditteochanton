@@ -33,6 +33,7 @@ main {
 
 #info {
     background: #959e82;
+    padding-bottom: 30px;
 }
 
 section {
@@ -67,6 +68,7 @@ section h1 {
     text-align: center;
     gap: 10px;
     overflow-y: scroll;
+    height: 100vh;
 }
 
 .flex-container > div {
@@ -200,7 +202,7 @@ body {
 
 .text {
     font-family: "La Belle Aurore", cursive;
-    font-size: 12rem; /* bigger main text */
+    font-size: 10rem;
     color: #fff;
     opacity: 0;
     position: relative;
@@ -208,7 +210,7 @@ body {
 
 .date {
     font-family: "La Belle Aurore", cursive;
-    font-size: 7.5rem; /* larger date */
+    font-size: 5.5rem;
     color: #fff;
     margin-top: -4rem;
 }
