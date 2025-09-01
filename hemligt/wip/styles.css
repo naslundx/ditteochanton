@@ -19,17 +19,26 @@ main {
 #wedding {
     height: 100vh;
     max-height: 100vh;
-    background: #959e82;
-    background-position: 70% 30%;
+    background-color: #959e82;
+    background-image: linear-gradient(
+        180deg,
+        rgba(177, 187, 156, 1) 0%,
+        rgba(149, 158, 130, 1) 100%
+    );
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     background-size: cover;
     overflow: hidden;
+}
+
+#info {
+    background: #959e82;
 }
 
 section {
     scroll-snap-align: start;
     scroll-snap-stop: always;
     min-height: 100vh;
-    padding: 10px;
     height: 100vh;
     display: flex;
     flex-direction: row;
@@ -44,25 +53,38 @@ section {
 section h1 {
     font-size: xx-large;
     font-style: italic;
-    color: darkolivegreen;
+    margin-top: 0;
+    color: white;
 }
 
-div.narrow {
-    max-width: 800px;
+.flex-container {
+    max-width: 900px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    overflow-y: scroll;
 }
 
-section#info > div {
+.flex-container > div {
     max-width: 600px;
     min-width: 40%;
     height: fit-content;
-    flex: 1;
+    flex: 1 1 400px;
     margin: 10px;
     border: 1px solid darkolivegreen;
     border-radius: 10px;
     padding: 10px;
+    font-family: "Marhey", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
 }
 
-section#info > div img {
+.flex-container > div img {
     max-width: 100%;
     max-height: 400px;
     margin-bottom: -10px;
@@ -70,7 +92,7 @@ section#info > div img {
     background:;
 }
 
-#info > div:last-of-type {
+.flex-container > div:last-of-type {
     margin-bottom: 30px;
 }
 
@@ -87,7 +109,7 @@ div.border {
 /* shared */
 
 a {
-    color: rgba(0, 0, 100);
+    color: lime;
     background-color: rgba(255, 255, 255, 0.25);
     padding: 0 5px;
     text-align: center;
@@ -116,14 +138,6 @@ a:hover {
     margin-top: 30px;
 }
 
-.flexContainer {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    gap: 16px;
-    max-width: 100%;
-}
-
 .flex {
     flex: 0 0 80%;
     border: 0;
@@ -131,35 +145,6 @@ a:hover {
     box-sizing: border-box;
     background: rgba(200, 100, 200, 0.4);
     border-radius: 15px;
-}
-
-.subFlexContainer {
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    padding-left: 0;
-    gap: 10px;
-}
-
-.subFlex {
-    flex: 1;
-}
-
-.subFlexLarge {
-    flex: 2;
-}
-
-@media (min-width: 768px) {
-    .flexContainer {
-        /*flex-wrap: wrap;
-    overflow: visible;*/
-        gap: 24px;
-        justify-content: space-between;
-    }
-
-    .flex {
-        flex: 1;
-    }
 }
 
 /* scroll */
@@ -313,12 +298,6 @@ body {
 }
 
 @media (max-width: 600px) {
-    .text {
-        font-size: 4rem;
-    }
-    .date {
-        font-size: 2rem;
-    }
 }
 
 /* Glass */
@@ -364,8 +343,8 @@ body {
     border-radius: inherit;
     background: linear-gradient(
         180deg,
-        rgba(255, 255, 255, 0.22),
-        rgba(255, 255, 255, 0.06)
+        rgba(255, 255, 255, 0.26),
+        rgba(255, 255, 255, 0.09)
     );
     pointer-events: none;
     mix-blend-mode: screen;
@@ -376,5 +355,53 @@ body {
 ) {
     .glass {
         background: rgba(20, 20, 20, 0.55);
+    }
+}
+
+/* Fade in */
+.fade-in-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+        opacity 2s ease-in-out,
+        transform 2s ease-in-out;
+}
+
+.fade-in-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Scroll down button */
+.scroll-down-btn {
+    position: absolute; /* floats relative to parent */
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    animation: bounce 2s infinite;
+}
+
+.scroll-down-btn:focus {
+    outline: none;
+}
+
+@keyframes bounce {
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    40% {
+        transform: translateX(-50%) translateY(-10px);
+    }
+    60% {
+        transform: translateX(-50%) translateY(-5px);
     }
 }

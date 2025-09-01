@@ -161,15 +161,17 @@ function startNotes() {
 
   setInterval(() => {
     const main = document.querySelector("main");
-    console.log(main.scrollTop);
-    if (main.scrollTop > 0) {
+    const scrollButton = document.querySelector(".scroll-down-btn");
+    const notAtTop = main.scrollTop > 0;
+    scrollButton.style.opacity = !notAtTop ? "100%" : "0";
+    if (notAtTop) {
       return;
     }
 
     const note = document.createElement("div");
     note.classList.add("note");
     note.textContent = notes[Math.floor(Math.random() * notes.length)];
-    note.style.left = Math.random() * window.innerWidth + "px";
+    note.style.left = Math.random() * (window.innerWidth - 30) + "px";
     note.style.bottom = "-30px";
     note.style.color = "#4d5c45";
 
@@ -177,12 +179,26 @@ function startNotes() {
     const rotate = Math.random() * 60 - 30 + "deg";
     note.style.setProperty("--drift", drift);
     note.style.setProperty("--rotate", rotate);
-    note.style.animationDuration = 6 + Math.random() * 5 + "s";
+    note.style.animationDuration = 4 + Math.random() * 5 + "s";
 
     document.body.appendChild(note);
 
-    setTimeout(() => note.remove(), 12000);
+    setTimeout(() => note.remove(), 8000);
   }, 1200);
 }
 
 window.onload = animateSequence;
+
+/* Fade in */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
+      observer.unobserve(entry.target); // fade in only once
+    }
+  });
+});
+
+document
+  .querySelectorAll(".fade-in-on-scroll")
+  .forEach((el) => observer.observe(el));
