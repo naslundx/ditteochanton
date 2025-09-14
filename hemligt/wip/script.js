@@ -20,46 +20,6 @@ const addFirework = () => {
   }
 };
 
-const updateScroll = (id) => {
-  const divContainer = document.querySelector(`#div-container-${id}`);
-  const dotContainer = document.querySelector(`#dot-container-${id}`);
-  const childDivs = document.querySelectorAll(`#div-container-${id} > div`);
-  const childDots = document.querySelectorAll(`#dot-container-${id} .dot`);
-
-  if (!divContainer || !dotContainer) {
-    return;
-  }
-
-  childDots.forEach((el) => el.classList.remove("active"));
-
-  for (let i = 0; i < childDivs.length; i++) {
-    let div = childDivs[i];
-    let dot = childDots[i];
-    let mid = div.offsetLeft + div.clientWidth / 2;
-
-    if (
-      mid > divContainer.scrollLeft &&
-      mid <= divContainer.scrollLeft + divContainer.clientWidth
-    ) {
-      dot?.classList.add("active");
-    }
-  }
-
-  if (
-    document.querySelectorAll(`#dot-container-${id} .dot.active`).length ===
-    childDots.length
-  ) {
-    dotContainer.classList.add("hidden");
-  } else {
-    dotContainer.classList.remove("hidden");
-  }
-};
-
-document.querySelectorAll(".div-container").forEach((el) => {
-  el.onwheel = () => updateScroll(0);
-  el.onscroll = () => updateScroll(0);
-});
-
 const deobfuscateMail = () => {
   document.querySelectorAll("a.mailto").forEach((el) => {
     const original = el.innerText;

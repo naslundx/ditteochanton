@@ -12,53 +12,63 @@ main {
     overflow-y: scroll;
     height: 100vh;
     width: 100%;
+    background-color: #fcfaed;
 }
 
 /* sections */
 
 #wedding {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    overflow: hidden;
+
     height: 100vh;
     max-height: 100vh;
+    color: #fcfaed;
+
     background-color: #959e82;
-    background-image: linear-gradient(
-        180deg,
-        rgba(177, 187, 156, 1) 0%,
-        rgba(149, 158, 130, 1) 100%
-    );
+    background-image: linear-gradient(180deg, #acd498 100%, #7ca468 0%);
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
-    overflow: hidden;
 }
 
 .main-img {
     z-index: -999;
     width: 95%;
     max-height: 55vh;
-    /* Apply gradient mask */
-    -webkit-mask-image: linear-gradient(
-        to right,
-        transparent,
-        black 15%,
-        black 85%,
-        transparent
-    );
-    -webkit-mask-repeat: no-repeat;
-    -webkit-mask-size: 100% 100%;
-
-    mask-image: linear-gradient(
-        to right,
-        transparent,
-        black 15%,
-        black 85%,
-        transparent
-    );
+    mask-image:
+        linear-gradient(
+            to right,
+            transparent,
+            black 5%,
+            black 95%,
+            transparent
+        ),
+        linear-gradient(
+            to bottom,
+            transparent,
+            black 5%,
+            black 95%,
+            transparent
+        );
+    mask-composite: intersect;
     mask-repeat: no-repeat;
     mask-size: 100% 100%;
 }
 
 #info {
-    background: #959e82;
+    background: url("https://images.pexels.com/photos/1323712/pexels-photo-1323712.jpeg");
+    mask-image: rgba(255, 255, 255, 0.3);
+    mask-composite: intersect;
+    mask-repeat: no-repeat;
+    mask-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
 }
 
 section {
@@ -66,68 +76,31 @@ section {
     scroll-snap-stop: always;
     min-height: 100vh;
     height: 100vh;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-    align-items: center;
     text-align: center;
     gap: 10px;
     overflow-y: scroll;
-}
-
-section h1 {
-    font-size: xx-large;
-    font-style: italic;
-    margin-top: 0;
-    color: white;
 }
 
 .flex-container {
     max-width: 900px;
+    margin: 0 auto;
+    height: 90vh;
+
     display: flex;
-    flex-direction: row;
-    justify-content: center;
     flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: baseline;
     align-items: center;
     text-align: center;
-    gap: 10px;
+    gap: 35px;
+
     overflow-y: scroll;
-    height: 100vh;
     padding-bottom: 100px;
-}
-
-.flex-container > div {
-    max-width: 600px;
-    min-width: 40%;
-    height: fit-content;
-    flex: 1 1 400px;
-    margin: 10px;
-    border: 1px solid darkolivegreen;
-    border-radius: 10px;
-    padding: 10px;
-    font-family: "Marhey", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 300;
-    font-style: normal;
-}
-
-.flex-container > div img {
-    max-width: 100%;
-    max-height: 400px;
-    margin-bottom: -10px;
-    border-radius: 10px;
-    background:;
+    padding: clamp(2rem, 4vw, 4rem);
 }
 
 .flex-container > div:last-of-type {
     margin-bottom: 30px;
-}
-
-div.border {
-    padding: 20px;
-    border: 1px solid rgba(0, 0, 0, 0.4);
-    border-radius: 20px;
 }
 
 #photo img {
@@ -153,54 +126,10 @@ a:hover {
     color: rgba(100, 100, 200, 0.7);
 }
 
-.left {
-    text-align: left;
-}
-
-.bottom {
-    position: relative;
-    bottom: 10px;
-}
-
-.margin-top {
-    margin-top: 30px;
-}
-
-.flex {
-    flex: 0 0 80%;
-    border: 0;
-    padding: 16px;
-    box-sizing: border-box;
-    background: rgba(200, 100, 200, 0.4);
-    border-radius: 15px;
-}
-
 /* scroll */
 
 .hidden {
     visibility: hidden !important;
-}
-
-.dot-container {
-    text-align: center;
-    padding: 20px;
-    /*background: #ddd;*/
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.dot {
-    height: 25px;
-    width: 25px;
-    margin: 0 2px;
-    background-color: #bbb;
-    border-radius: 50%;
-    display: inline-block;
-    transition: background-color 0.6s ease;
-}
-
-.dot.active {
-    background-color: #902993;
 }
 
 /* start */
@@ -229,15 +158,12 @@ body {
 .text {
     font-family: "La Belle Aurore", cursive;
     font-size: 6rem;
-    color: #fff;
     opacity: 0;
     position: relative;
 }
 
-.date {
-    font-family: "La Belle Aurore", cursive;
+.text.date {
     font-size: 4.5rem;
-    color: #fff;
     margin-top: -4rem;
 }
 
@@ -330,38 +256,48 @@ body {
 }
 
 /* Glass */
-.hero {
-    padding: clamp(1rem, 3vw, 3rem);
-    background: url("https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Danmark_kyrka1.jpg/1280px-Danmark_kyrka1.jpg")
-        center/cover no-repeat;
-}
-
-/* Optional: a soft dark overlay to boost contrast */
-.hero::before {
+.flex-container::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0.25),
-        rgba(0, 0, 0, 0.35)
-    );
+    background: rgba(255, 255, 255, 0.2);
     pointer-events: none;
 }
 
 .glass {
+    flex: 0;
+    align-content: center;
+
+    max-width: 600px;
+    min-width: 40%;
+    height: fit-content;
+    border-radius: 10px;
+    padding: 20px;
+
+    color: darkolivegreen;
+    font-family: "Marhey", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+
     background: rgba(255, 255, 255, 0.12);
     -webkit-backdrop-filter: blur(14px) saturate(120%) brightness(115%);
     backdrop-filter: blur(14px) saturate(120%) brightness(115%);
 
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    border: 3px solid rgba(255, 255, 255, 0.45);
     border-radius: 16px;
     box-shadow:
         0 8px 24px rgba(0, 0, 0, 0.25),
         inset 0 1px 0 rgba(255, 255, 255, 0.25);
 
     padding: 1.25rem 1.1rem;
-    color: white;
+}
+
+.glass img {
+    max-width: 100%;
+    max-height: 400px;
+    margin-bottom: -10px;
+    border-radius: 10px;
 }
 
 /* Subtle inner gradient for depth */
@@ -372,8 +308,8 @@ body {
     border-radius: inherit;
     background: linear-gradient(
         180deg,
-        rgba(255, 255, 255, 0.26),
-        rgba(255, 255, 255, 0.09)
+        rgba(200, 255, 200, 0.16),
+        rgba(200, 255, 200, 0.09)
     );
     pointer-events: none;
     mix-blend-mode: screen;
