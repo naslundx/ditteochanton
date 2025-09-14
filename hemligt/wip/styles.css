@@ -126,8 +126,6 @@ a:hover {
     color: rgba(100, 100, 200, 0.7);
 }
 
-/* scroll */
-
 .hidden {
     visibility: hidden !important;
 }
