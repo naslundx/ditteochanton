@@ -276,8 +276,7 @@ body {
     font-weight: 300;
     font-style: normal;
 
-    -webkit-backdrop-filter: blur(14px) saturate(120%) brightness(115%);
-    backdrop-filter: blur(14px) saturate(120%) brightness(115%);
+    backdrop-filter: blur(4px) saturate(120%) brightness(115%);
 
     border: 3px solid rgba(255, 255, 255, 0.45);
     border-radius: 16px;
@@ -291,13 +290,14 @@ body {
 .glass.image {
     padding: 0;
     border: 0;
+    min-width: 50%;
 }
 
 .glass img {
     max-width: 100%;
-    max-height: 400px;
     margin-bottom: -10px;
     border-radius: 10px;
+    object-fit: cover;
 }
 
 div.glass.large {
