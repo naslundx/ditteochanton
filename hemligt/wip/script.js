@@ -68,9 +68,6 @@ function animateSequence() {
     () => date.classList.add("slide-bottom"),
     INITIAL_DELAY + DELAY * 3,
   );
-
-  // Start showing notes after all text has appeared
-  setTimeout(startNotes, 3200);
 }
 
 function startNotes() {
@@ -121,6 +118,36 @@ document
   .forEach((el) => observer.observe(el));
 
 setTimeout(
-  () => document.querySelector(".fade-in").classList.add("visible"),
+  () => document.querySelector(".fade-in")?.classList.add("visible"),
   8000,
 );
+
+const el = document.querySelector("#wedding img");
+console.log(el);
+var pressTimer;
+
+function startPress(e) {
+  e.preventDefault();
+  pressTimer = setTimeout(() => {
+    startNotes();
+  }, 2000);
+}
+
+function cancelPress() {
+  clearTimeout(pressTimer);
+}
+
+el.addEventListener("mousedown", startPress);
+el.addEventListener("mouseup", cancelPress);
+el.addEventListener("mouseleave", cancelPress);
+el.addEventListener("touchstart", startPress);
+el.addEventListener("touchend", cancelPress);
+el.addEventListener("touchmove", cancelPress);
+
+async function copyToClipboard(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch (err) {
+    console.error("Failed to copy: ", err);
+  }
+}
