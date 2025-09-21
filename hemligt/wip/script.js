@@ -49,49 +49,6 @@ const resizeMap = () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   deobfuscateMail();
-  updateScroll(0);
-
-  const links = document.querySelectorAll("header nav ul li a");
-
-  const listener = () => {
-    let current = "";
-    const main = document.querySelector("main");
-    const sections = document.querySelectorAll("section");
-    sections.forEach((section) => {
-      const sectionTop = section.offsetTop;
-      const sectionHeight = section.clientHeight;
-      if (main.scrollTop >= sectionTop - sectionHeight / 2) {
-        current = section.getAttribute("id");
-      }
-    });
-    links.forEach((link) => {
-      link.classList.remove("active");
-      if (link.getAttribute("href").includes(current)) {
-        link.classList.add("active");
-      }
-    });
-
-    const firework = document.querySelectorAll(".firework");
-    if (current != "wedding") {
-      firework.forEach((f) => f.classList.add("hidden"));
-    } else {
-      firework.forEach((f) => f.classList.remove("hidden"));
-    }
-  };
-
-  // Highlight current section
-  document.querySelector("main").addEventListener("scroll", listener);
-
-  // Smooth scrolling
-  links.forEach((link) => {
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-      const target = document.querySelector(link.getAttribute("href"));
-      target.scrollIntoView({ behavior: "smooth" });
-    });
-  });
-
-  listener();
 });
 
 /* start */
