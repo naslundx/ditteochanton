@@ -95,6 +95,10 @@ section {
 
 /* shared */
 
+b {
+    font-weight: 700;
+}
+
 a {
     color: rgb(95, 117, 57);
     background-color: rgba(255, 255, 255, 0.25);
@@ -127,8 +131,7 @@ body {
     overflow: hidden;
 }
 
-.container {
-    text-align: center;
+#wedding .container {
     position: relative;
     z-index: 10;
 }
@@ -246,12 +249,37 @@ body {
     pointer-events: none;
 }
 
+#info .container {
+    column-count: 2;
+    column-gap: 2rem;
+
+    margin: 0 auto;
+    max-width: 900px;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+#info .container > div {
+    break-inside: avoid;
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 900px) {
+    #info .container {
+        column-count: 1;
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+    #info .container > div {
+        margin: 0 auto;
+        margin-bottom: 1rem;
+    }
+}
+
 .glass {
     flex: 1;
     align-content: center;
 
-    max-width: 600px;
-    min-width: 40%;
     height: fit-content;
 
     color: darkolivegreen;
@@ -267,7 +295,7 @@ body {
         0 8px 24px rgba(0, 0, 0, 0.25),
         inset 0 1px 0 rgba(255, 255, 255, 0.25);
 
-    padding: 1.25rem 1.1rem;
+    padding: 1.25rem 1.5rem;
 }
 
 .glass.image {
@@ -284,9 +312,7 @@ body {
 }
 
 div.glass.large {
-    max-width: 100%;
-    flex: 1;
-    width: 90%;
+    background-color: white;
 }
 
 /* Subtle inner gradient for depth */
@@ -337,7 +363,6 @@ button.scroll-down-btn {
     color: white;
     font-size: 2rem;
     cursor: pointer;
-    animation: bounce 2s infinite;
 }
 
 button.scroll-down-btn i {
@@ -352,27 +377,12 @@ button.scroll-down-btn i {
     color: white;
 }
 
-@keyframes bounce {
-    0%,
-    20%,
-    50%,
-    80%,
-    100% {
-        transform: translateX(-50%) translateY(0);
-    }
-    40% {
-        transform: translateX(-50%) translateY(-10px);
-    }
-    60% {
-        transform: translateX(-50%) translateY(-5px);
-    }
-}
-
 a.form {
     font-size: large;
     border: 1px solid green;
     border-radius: 10px;
     padding: 10px;
+    height: 10rem;
 }
 
 a.form:hover {

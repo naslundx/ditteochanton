@@ -58,7 +58,7 @@ function animateSequence() {
   const amp = document.getElementById("amp");
   const a = document.getElementById("a");
   const date = document.getElementById("date");
-  const INITIAL_DELAY = 100;
+  const INITIAL_DELAY = 300;
   const DELAY = 900;
 
   setTimeout(() => d.classList.add("slide-left"), INITIAL_DELAY);
@@ -68,6 +68,19 @@ function animateSequence() {
     () => date.classList.add("slide-bottom"),
     INITIAL_DELAY + DELAY * 3,
   );
+  setTimeout(() => showScrollButton(), INITIAL_DELAY + DELAY * 4);
+}
+
+function showScrollButton() {
+  setInterval(() => {
+    const main = document.querySelector("main");
+    const scrollButton = document.querySelector(".scroll-down-btn");
+    const notAtTop = main.scrollTop > 0;
+    scrollButton.style.opacity = !notAtTop ? "100%" : "0";
+    if (notAtTop) {
+      return;
+    }
+  });
 }
 
 function startNotes() {
