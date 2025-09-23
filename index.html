@@ -3,21 +3,196 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content="Vida och Marcus" />
-        <meta name="author" content="Bröllopsplanerare" />
+        <meta name="description" content="Ditte och Anton" />
         <title>Bröllop</title>
         <link rel="stylesheet" href="styles.css" />
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+            rel="stylesheet"
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
             href="https://fonts.googleapis.com/css2?family=La+Belle+Aurore&display=swap"
             rel="stylesheet"
         />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@600&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Marhey:wght@300..700&display=swap"
+            rel="stylesheet"
+        />
     </head>
-    <body style="background-color: #7ca468">
-        <div style="margin: 20px; color: #fcfaed">
-            <h1>Ditte och Anton</h1>
-        </div>
+    <body>
+        <main>
+            <section id="wedding">
+                <div class="container">
+                    <img
+                        src="mainimage.jpg"
+                        class="main-img fade-in-on-scroll"
+                    />
+                    <div class="row">
+                        <div id="d" class="text">D</div>
+                        <div id="amp" class="text">&</div>
+                        <div id="a" class="text">A</div>
+                    </div>
+                    <div id="date" class="text date">2026-04-11</div>
+                </div>
+                <button
+                    class="scroll-down-btn will-fade-in"
+                    onclick="document.querySelector('main').scrollBy({ top: window.innerHeight, behavior: 'smooth' });"
+                >
+                    <i class="fas fa-arrow-down"></i>
+                </button>
+            </section>
+            <section id="info">
+                <div class="container">
+                    <div class="glass fade-in-on-scroll">
+                        <h1><i class="fas fa-church"></i> Välkommen!</h1>
+                        <p>
+                            Vigseln börjar klockan
+                            <b>14:00 lördag 11 april 2026</b> i Danmarks kyrka
+                            utanför centrala Uppsala.
+                        </p>
+                        <p>
+                            Efter vigseln går vi tvärs över gatan till Danmarks
+                            bygdegård för mingel, middag och fest.
+                        </p>
+                    </div>
+                    <div class="glass image fade-in-on-scroll">
+                        <img
+                            src="https://www.svenskakyrkan.se/bilder/danmarkkyrka2.JPG?doprocessing=1&w=800"
+                        />
+                    </div>
+                    <div class="glass fade-in-on-scroll">
+                        <h1><i class="fas fa-map-marker"></i> Plats</h1>
+                        <p>
+                            <b>Kyrkans adress:</b> Danmarksby 156, 755 98
+                            Uppsala.
+                            <a
+                                href="#"
+                                onclick="copyToClipboard('Danmarksby 156, 755 98 Uppsala')"
+                            >
+                                <i class="fas fa-clone"></i
+                            ></a>
+                        </p>
+                        <p>
+                            <b>Bygdegårdens adress</b> (precis över gatan från
+                            kyrkan): Danmarksby 87, 755 98 Uppsala.
+                            <a
+                                href="#"
+                                onclick="copyToClipboard('Danmarksby 87, 755 98 Uppsala')"
+                            >
+                                <i class="fas fa-clone"></i
+                            ></a>
+                        </p>
+                        <p>
+                            <a href="https://maps.app.goo.gl/ci7kRPkoLEU7f22E8"
+                                >Länk till Google Maps</a
+                            >
+                        </p>
+                    </div>
+
+                    <div class="glass fade-in-on-scroll">
+                        <h1><i class="fas fa-bus"></i> Hitta hit</h1>
+                        <p>
+                            Buss 102 stannar precis utanför kyrkan. Den avgår
+                            från Uppsala centralstation en gång i timmen. Titta
+                            gärna på <a href="https://ul.se">UL.se</a> närmare
+                            bröllopsdatumet för mer information och exakta
+                            tider. Sista bussen från Danmarks kyrka till Uppsala
+                            C avgår 01:27.
+                        </p>
+                        <p>
+                            För dig som åker bil finns parkeringsplatser utanför
+                            kyrkan. Danmark ligger bara åtta kilometer från
+                            centrala Uppsala, så för dig som hellre åker taxi
+                            går det förstås också bra.
+                        </p>
+                    </div>
+
+                    <div class="glass image fade-in-on-scroll">
+                        <img src="map.png" />
+                    </div>
+
+                    <div class="glass fade-in-on-scroll">
+                        <h1><i class="fas fa-bullhorn"></i> Toastmasters</h1>
+                        <p>
+                            Vi är så glada över att få presentera kvällens
+                            toastmastrar: Angelica och Ivar! Vi lärde känna
+                            dessa stjärnor genom studierna på pol. kand.
+                        </p>
+                        <img src="toastmasters.jpg" />
+                        <p>
+                            <b>Angelica</b> är Nordingrådottern som efter en
+                            karriär på Finansdepartementet och i Bryssel nyligen
+                            flyttat norrut igen. <b>Ivar</b> är den trogna
+                            Stockholmsbon som har stenkoll på pensioner,
+                            bloggare och hur det är att dela lägenhet med Ditte.
+                        </p>
+                        <p>
+                            Vill du hålla tal eller hitta på något annat kul
+                            under middagen? Skriv till
+                            <a class="mailto" href=""
+                                >vine.jnuyfgrva@tznvy.pbz</a
+                            >
+                            eller
+                            <a class="mailto" href=""
+                                >natryvpntenqva@tznvy.pbz</a
+                            >
+                            så löser de det!
+                        </p>
+                    </div>
+                    <div class="glass fade-in-on-scroll">
+                        <h1><i class="fas fa-child"></i> Barn</h1>
+                        <p>
+                            Vi älskar att hänga med era barn, men vill inte göra
+                            det just den här dagen.
+                        </p>
+                        <p>Ammande barn är förstås välkomna.</p>
+                    </div>
+                    <div class="glass fade-in-on-scroll">
+                        <h1><i class="fas fa-gift"></i> Presenter</h1>
+                        <p>
+                            Vi önskar oss ingenting, utan ser det som gåva nog
+                            att du kommer och firar med oss! Vill du ändå gärna
+                            ge något uppskattar vi ett litet bidrag till vår
+                            bröllopsresa (destination New York!).
+                        </p>
+                        <p>
+                            För att ge ett bidrag till resan kan du swisha
+                            Dittes pappa,
+                        </p>
+                        <p>
+                            <b>Jonas Roslund: 0708 84 74 06</b
+                            ><a
+                                href="#"
+                                onclick="copyToClipboard('0708847406')"
+                            >
+                                <i class="fas fa-clone"></i
+                            ></a>
+                        </p>
+                    </div>
+                    <div class="glass fade-in-on-scroll large">
+                        <h1><i class="fas fa-envelope"></i> OSA</h1>
+                        <p>
+                            Vi behöver veta om du kan komma senast den 11
+                            december 2025. Anmäl dig genom att fylla i
+                            formuläret här:
+                        </p>
+                        <p class="formparagraph bounce">
+                            <a
+                                class="form"
+                                href="https://docs.google.com/forms/d/e/1FAIpQLSfyRYg2Okn53_hPB2qITXPTdPdojp-CBZ4Wxo06a49gQgRX-A/viewform"
+                                >Till formuläret!</a
+                            >
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </main>
         <script src="script.js"></script>
         <script
             async
