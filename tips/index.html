@@ -8,41 +8,42 @@
         <style>
             body {
                 font-family: Arial, sans-serif;
-                text-align: center;
                 margin: 0;
-                padding: 20px;
-                padding-bottom: 150px;
+                padding: 15px;
+                padding-bottom: 170px;
                 background: #f4f6f8;
             }
 
             h1 {
-                font-size: 1.6em;
-                margin-bottom: 15px;
+                text-align: center;
             }
 
-            /* Answer rows */
+            .player {
+                margin-bottom: 20px;
+            }
+
+            .playerNumber {
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+
             .answerRow {
                 display: flex;
-                justify-content: center;
                 flex-wrap: wrap;
-                gap: 6px;
-                margin: 10px 0;
+                gap: 5px;
             }
 
-            /* Individual character boxes */
             .char {
-                width: 28px;
-                height: 36px;
+                width: 26px;
+                height: 34px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                font-weight: bold;
                 border-radius: 6px;
-                background: #e0e0e0;
-                font-size: 1.2em;
+                font-weight: bold;
+                background: #ddd;
             }
 
-            /* Color states */
             .correct {
                 background: #28a745;
                 color: white;
@@ -53,20 +54,15 @@
                 color: white;
             }
 
-            /* Placeholder style */
-            .placeholder {
-                color: #999;
-                font-weight: normal;
+            .neutral {
+                background: #ccc;
             }
 
-            /* Score */
-            #score {
-                font-size: 1.4em;
-                margin: 15px 0;
+            .score {
+                margin-top: 5px;
                 font-weight: bold;
             }
 
-            /* Bottom bar */
             #bottomBar {
                 position: fixed;
                 bottom: 0;
@@ -84,8 +80,8 @@
 
             button {
                 flex: 1;
-                padding: 16px;
-                font-size: 1.6em;
+                padding: 14px;
+                font-size: 1.4em;
                 border: none;
                 border-radius: 10px;
                 background: #007bff;
@@ -94,19 +90,23 @@
 
             button:active {
                 transform: scale(0.97);
-                background: #0056b3;
+            }
+
+            .secondary {
+                display: flex;
+                gap: 10px;
+                margin-top: 8px;
+            }
+
+            #undoBtn {
+                background: #6c757d;
             }
 
             #clearBtn {
                 background: #dc3545;
-                margin-top: 10px;
-            }
-
-            /* Labels */
-            .label {
+                flex: 0.5;
                 font-size: 0.9em;
-                color: #666;
-                margin-top: 10px;
+                padding: 10px;
             }
         </style>
     </head>
@@ -114,13 +114,7 @@
     <body>
         <h1>Rättning, tipspromenad</h1>
 
-        <div class="label">Dina svar</div>
-        <div id="answerDisplay" class="answerRow"></div>
-
-        <div class="label">Rätta svar</div>
-        <div id="correctDisplay" class="answerRow"></div>
-
-        <div id="score"></div>
+        <div id="players"></div>
 
         <div id="bottomBar">
             <div class="buttons">
@@ -128,24 +122,18 @@
                 <button onclick="addAnswer('X')">X</button>
                 <button onclick="addAnswer('2')">2</button>
             </div>
-            <button id="clearBtn" onclick="clearAnswers()">Rensa</button>
+
+            <div class="secondary">
+                <button id="undoBtn" onclick="undo()">Ångra</button>
+                <button id="clearBtn" onclick="clearAll()">Rensa allt</button>
+            </div>
         </div>
 
         <script>
             const N = 12;
-
-            // ===== CONFIG =====
-            const encrypted = "RVhBQkFDXlxUX1BV";
+            const encrypted = "GhgYFh4YFh4aFh8=";
             const key = "tipspromenad";
-            // ==================
 
-            function vibrate() {
-                if (navigator.vibrate) {
-                    navigator.vibrate(30);
-                }
-            }
-
-            // XOR decrypt
             function decrypt(base64, key) {
                 const decoded = atob(base64);
                 let result = "";
@@ -158,7 +146,6 @@
                 return result;
             }
 
-            // XOR encrypt (use in console)
             function encrypt(text, key) {
                 let result = "";
 
@@ -173,89 +160,143 @@
             }
 
             const correctAnswers = decrypt(encrypted, key);
-            let answers = "";
 
-            // Render empty or partial answers (neutral style)
-            function renderAnswers() {
-                const container = document.getElementById("answerDisplay");
+            // ===== State =====
+            let players = JSON.parse(localStorage.getItem("players") || "[]");
+            let current = "";
+
+            // ===== Utils =====
+            function vibrate() {
+                if (navigator.vibrate) navigator.vibrate(30);
+            }
+
+            function save() {
+                localStorage.setItem("players", JSON.stringify(players));
+            }
+
+            // ===== Rendering =====
+            function render() {
+                const container = document.getElementById("players");
                 container.innerHTML = "";
 
-                if (answers.length === 0) {
-                    container.innerHTML = "<span class='placeholder'>-</span>";
-                    return;
-                }
+                players.forEach((answers, index) => {
+                    container.appendChild(renderPlayer(answers, index + 1));
+                });
 
-                for (let char of answers) {
-                    const span = document.createElement("span");
-                    span.textContent = char;
-                    span.className = "char";
-                    container.appendChild(span);
-                }
-            }
-
-            function addAnswer(val) {
-                if (answers.length >= N) return;
-
-                vibrate();
-
-                answers += val;
-                renderAnswers();
-
-                if (answers.length === N) {
-                    grade();
+                // current (incomplete)
+                if (current.length > 0) {
+                    container.appendChild(
+                        renderPlayer(current, players.length + 1, true),
+                    );
                 }
             }
 
-            function clearAnswers() {
-                vibrate();
+            function renderPlayer(answerString, number, isCurrent = false) {
+                const wrapper = document.createElement("div");
+                wrapper.className = "player";
 
-                answers = "";
-                document.getElementById("correctDisplay").innerHTML = "";
-                document.getElementById("score").textContent = "";
-                renderAnswers();
-            }
+                const title = document.createElement("div");
+                title.className = "playerNumber";
+                title.textContent = `Rad ${number}`;
+                wrapper.appendChild(title);
 
-            function grade() {
-                const answerDiv = document.getElementById("answerDisplay");
-                const correctDiv = document.getElementById("correctDisplay");
-                const scoreDiv = document.getElementById("score");
+                const rowUser = document.createElement("div");
+                rowUser.className = "answerRow";
 
-                answerDiv.innerHTML = "";
-                correctDiv.innerHTML = "";
+                const rowCorrect = document.createElement("div");
+                rowCorrect.className = "answerRow";
 
                 let score = 0;
 
-                for (let i = 0; i < N; i++) {
-                    const user = answers[i];
+                for (let i = 0; i < answerString.length; i++) {
+                    const user = answerString[i];
                     const correct = correctAnswers[i];
 
-                    const userSpan = document.createElement("span");
-                    const correctSpan = document.createElement("span");
+                    const u = document.createElement("span");
+                    u.className = "char";
+                    u.textContent = user;
 
-                    userSpan.textContent = user;
-                    correctSpan.textContent = correct;
-
-                    userSpan.classList.add("char");
-                    correctSpan.classList.add("char");
-
-                    if (user === correct) {
-                        userSpan.classList.add("correct");
-                        correctSpan.classList.add("correct");
+                    if (!isCurrent && user === correct) {
+                        u.classList.add("correct");
                         score++;
+                    } else if (!isCurrent) {
+                        u.classList.add("incorrect");
                     } else {
-                        userSpan.classList.add("incorrect");
-                        correctSpan.classList.add("incorrect");
+                        u.classList.add("neutral");
                     }
 
-                    answerDiv.appendChild(userSpan);
-                    correctDiv.appendChild(correctSpan);
+                    rowUser.appendChild(u);
+
+                    if (!isCurrent) {
+                        const c = document.createElement("span");
+                        c.className = "char";
+                        c.textContent = correct;
+
+                        c.classList.add(
+                            user === correct ? "correct" : "incorrect",
+                        );
+                        rowCorrect.appendChild(c);
+                    }
                 }
 
-                scoreDiv.textContent = `Poäng: ${score} / ${N}`;
+                wrapper.appendChild(rowUser);
+
+                if (!isCurrent) {
+                    wrapper.appendChild(rowCorrect);
+
+                    const scoreDiv = document.createElement("div");
+                    scoreDiv.className = "score";
+                    scoreDiv.textContent = `Poäng: ${score}/${N}`;
+                    wrapper.appendChild(scoreDiv);
+                }
+
+                return wrapper;
+            }
+
+            // ===== Actions =====
+            function addAnswer(val) {
+                if (current.length >= N) return;
+
+                vibrate();
+                current += val;
+
+                if (current.length === N) {
+                    players.push(current);
+                    current = "";
+                    save();
+                }
+
+                render();
+            }
+
+            function undo() {
+                vibrate();
+
+                if (current.length > 0) {
+                    current = current.slice(0, -1);
+                } else if (players.length > 0) {
+                    current = players.pop();
+                    current = current.slice(0, -1);
+                    save();
+                }
+
+                render();
+            }
+
+            function clearAll() {
+                if (!confirm("Rensa alla resultat?")) return;
+
+                vibrate();
+
+                players = [];
+                current = "";
+                localStorage.removeItem("players");
+
+                render();
             }
 
             // Init
-            renderAnswers();
+            render();
         </script>
     </body>
 </html>
