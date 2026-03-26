@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="sv">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Rättning, tipspromenad</title>
+
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                text-align: center;
+                margin: 0;
+                padding: 20px;
+                padding-bottom: 150px;
+                background: #f4f6f8;
+            }
+
+            h1 {
+                font-size: 1.6em;
+                margin-bottom: 15px;
+            }
+
+            /* Answer rows */
+            .answerRow {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 6px;
+                margin: 10px 0;
+            }
+
+            /* Individual character boxes */
+            .char {
+                width: 28px;
+                height: 36px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+                border-radius: 6px;
+                background: #e0e0e0;
+                font-size: 1.2em;
+            }
+
+            /* Color states */
+            .correct {
+                background: #28a745;
+                color: white;
+            }
+
+            .incorrect {
+                background: #dc3545;
+                color: white;
+            }
+
+            /* Placeholder style */
+            .placeholder {
+                color: #999;
+                font-weight: normal;
+            }
+
+            /* Score */
+            #score {
+                font-size: 1.4em;
+                margin: 15px 0;
+                font-weight: bold;
+            }
+
+            /* Bottom bar */
+            #bottomBar {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: white;
+                padding: 10px;
+                box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .buttons {
+                display: flex;
+                gap: 10px;
+            }
+
+            button {
+                flex: 1;
+                padding: 16px;
+                font-size: 1.6em;
+                border: none;
+                border-radius: 10px;
+                background: #007bff;
+                color: white;
+            }
+
+            button:active {
+                transform: scale(0.97);
+                background: #0056b3;
+            }
+
+            #clearBtn {
+                background: #dc3545;
+                margin-top: 10px;
+            }
+
+            /* Labels */
+            .label {
+                font-size: 0.9em;
+                color: #666;
+                margin-top: 10px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>Rättning, tipspromenad</h1>
+
+        <div class="label">Dina svar</div>
+        <div id="answerDisplay" class="answerRow"></div>
+
+        <div class="label">Rätta svar</div>
+        <div id="correctDisplay" class="answerRow"></div>
+
+        <div id="score"></div>
+
+        <div id="bottomBar">
+            <div class="buttons">
+                <button onclick="addAnswer('1')">1</button>
+                <button onclick="addAnswer('X')">X</button>
+                <button onclick="addAnswer('2')">2</button>
+            </div>
+            <button id="clearBtn" onclick="clearAnswers()">Rensa</button>
+        </div>
+
+        <script>
+            const N = 12;
+
+            // ===== CONFIG =====
+            const encrypted = "RVhBQkFDXlxUX1BV";
+            const key = "tipspromenad";
+            // ==================
+
+            function vibrate() {
+                if (navigator.vibrate) {
+                    navigator.vibrate(30);
+                }
+            }
+
+            // XOR decrypt
+            function decrypt(base64, key) {
+                const decoded = atob(base64);
+                let result = "";
+
+                for (let i = 0; i < decoded.length; i++) {
+                    result += String.fromCharCode(
+                        decoded.charCodeAt(i) ^ key.charCodeAt(i % key.length),
+                    );
+                }
+                return result;
+            }
+
+            // XOR encrypt (use in console)
+            function encrypt(text, key) {
+                let result = "";
+
+                for (let i = 0; i < text.length; i++) {
+                    result += String.fromCharCode(
+                        text.charCodeAt(i) ^ key.charCodeAt(i % key.length),
+                    );
+                }
+
+                const base64 = btoa(result);
+                return base64;
+            }
+
+            const correctAnswers = decrypt(encrypted, key);
+            let answers = "";
+
+            // Render empty or partial answers (neutral style)
+            function renderAnswers() {
+                const container = document.getElementById("answerDisplay");
+                container.innerHTML = "";
+
+                if (answers.length === 0) {
+                    container.innerHTML = "<span class='placeholder'>-</span>";
+                    return;
+                }
+
+                for (let char of answers) {
+                    const span = document.createElement("span");
+                    span.textContent = char;
+                    span.className = "char";
+                    container.appendChild(span);
+                }
+            }
+
+            function addAnswer(val) {
+                if (answers.length >= N) return;
+
+                vibrate();
+
+                answers += val;
+                renderAnswers();
+
+                if (answers.length === N) {
+                    grade();
+                }
+            }
+
+            function clearAnswers() {
+                vibrate();
+
+                answers = "";
+                document.getElementById("correctDisplay").innerHTML = "";
+                document.getElementById("score").textContent = "";
+                renderAnswers();
+            }
+
+            function grade() {
+                const answerDiv = document.getElementById("answerDisplay");
+                const correctDiv = document.getElementById("correctDisplay");
+                const scoreDiv = document.getElementById("score");
+
+                answerDiv.innerHTML = "";
+                correctDiv.innerHTML = "";
+
+                let score = 0;
+
+                for (let i = 0; i < N; i++) {
+                    const user = answers[i];
+                    const correct = correctAnswers[i];
+
+                    const userSpan = document.createElement("span");
+                    const correctSpan = document.createElement("span");
+
+                    userSpan.textContent = user;
+                    correctSpan.textContent = correct;
+
+                    userSpan.classList.add("char");
+                    correctSpan.classList.add("char");
+
+                    if (user === correct) {
+                        userSpan.classList.add("correct");
+                        correctSpan.classList.add("correct");
+                        score++;
+                    } else {
+                        userSpan.classList.add("incorrect");
+                        correctSpan.classList.add("incorrect");
+                    }
+
+                    answerDiv.appendChild(userSpan);
+                    correctDiv.appendChild(correctSpan);
+                }
+
+                scoreDiv.textContent = `Poäng: ${score} / ${N}`;
+            }
+
+            // Init
+            renderAnswers();
+        </script>
+    </body>
+</html>
